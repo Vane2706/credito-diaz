@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Garantías</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen p-6">
+<main class="max-w-4xl mx-auto"><a th:href="@{/usuarios/perfil}" class="text-sky-700">← Perfil</a>
+    <h1 class="text-3xl font-bold my-5">Notificaciones de garantía</h1>
+    <div th:if="${mensajeExito}" class="mb-4 p-3 bg-green-50 text-green-700 rounded" th:text="${mensajeExito}"></div>
+    <div th:if="${mensajeError}" class="mb-4 p-3 bg-red-50 text-red-700 rounded" th:text="${mensajeError}"></div>
+    <div class="space-y-4">
+        <article th:each="n : ${notificaciones}" class="bg-white rounded-xl shadow p-5"><p>Deuda garantizada: <b>S/
+            <span th:text="${n.montoAPagar}"></span></b></p>
+            <p>Fecha límite: <b th:text="${n.fechaLimitePago}"></b></p>
+            <p class="text-sm text-slate-500">Se utilizarán primero bonos y luego ahorro disponible.</p>
+            <form th:action="@{'/usuarios/notificaciones-mora/' + ${n.id} + '/pagar}" method="post"><input type="hidden"
+                                                                                                           th:name="${_csrf.parameterName}"
+                                                                                                           th:value="${_csrf.token}">
+                <button class="bg-amber-600 text-white rounded p-2 mt-2">Cubrir garantía con mis fondos</button>
+            </form>
+        </article>
+        <p th:if="${#lists.isEmpty(notificaciones)}" class="bg-white rounded-xl p-6">No tienes notificaciones
+            pendientes.</p></div>
+</main>
+
+<script th:src="@{/js/notificaciones-navegador.js}"></script>
+</body>
+</html>

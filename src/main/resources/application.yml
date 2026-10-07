@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: credito
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/credito?serverTimezone=America/Lima&useSSL=false&allowPublicKeyRetrieval=true
+#    username: root
+#    password: raticate2024
+    url: ${MYSQLHOST}
+    username: ${MYSQLUSER}
+    password: ${MYSQLPASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 35MB
+  thymeleaf:
+    cache: false
+
+server:
+  port: 5000
+  error:
+    include-message: never
+
+logging:
+  level:
+    org.springframework.security: INFO
+    org.hibernate.SQL: WARN
